@@ -1,0 +1,14 @@
+#visualizer {
+
+	width: 200px;
+	position: absolute;
+	background-color: red;
+
+}
+
+#calculator {
+
+	width: auto;
+	height: auto;
+
+}

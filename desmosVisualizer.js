@@ -9,35 +9,52 @@ window.onload = function() {
 	
 	elt = document.getElementById('calculator');
 	calculator = Desmos.Calculator(elt);
-	alert(calculator.expressions)
 	window.setInterval(graphText,100)
 	
 
 	
 }
 
+// Look for dominant frequency.
 function graphText() {
 	
-	
+	console.log("max = " + Array.max(data))
+	console.log("data =" + data[1])
 	if(data) {
 		
-		var input = data[1]/50
-		if(data[1] > 10) {
-			var latex = "y > sin(" + input + "x)"
-			calculator.removeExpression({id : "graph1"});
-			calculator.setExpression({
-				id:'graph1', 
-				latex:latex,
-				color: '#ff0000'
-			});	
-		}
-		
+		var input = Array.max(data)/5
+		var input2 = (data[1])/5
+		var input3 = (data[500])/5
+		var input4 = (data[1000])/5
+		console.log(input)
+		var latex = "y^2 + x^2 = INPUT"
+		graph(latex,input,1)
+		graph(latex,input2,2)
+		graph(latex,input3,3)
+
 	}
 	
 	
 
 	
 }
+
+function graph(latex,input,id) {
+	
+	latex = latex.replace("INPUT",input)
+	calculator.removeExpression({id : "graph" + id});
+	calculator.setExpression({
+		id:'graph'+ id, 
+		latex:latex,
+		color: '#ff0000'
+	});
+	
+}
+
+// Finds max in array
+Array.max = function( array ){
+    return Math.max.apply( Math, array );
+};
 
 function getData() {
 	

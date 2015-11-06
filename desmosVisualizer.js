@@ -4,13 +4,24 @@ var calculator;
 
 window.onload = function() {
 	
+	button = document.getElementById("button")
+	button.onclick = beginVis
+	
+}
+
+beginVis = function() {
+	
+	button = document.getElementById("button")
+	button.parentNode.removeChild(button)
+	
 	getData()
 	var visualizer = document.getElementById("visualizer");
 	
 	elt = document.getElementById('calculator');
 	calculator = Desmos.Calculator(elt);
 	window.setInterval(graphText,100)
-	
+	var latex = "y > -1000"
+	graph(latex,1,1)
 
 	
 }
@@ -18,20 +29,31 @@ window.onload = function() {
 // Look for dominant frequency.
 function graphText() {
 	
-	console.log("max = " + Array.max(data))
-	console.log("data =" + data[1])
 	if(data) {
 		
-		var input = Array.max(data)/5
-		var input2 = (data[1])/5
-		var input3 = (data[500])/5
-		var input4 = (data[1000])/5
-		console.log(input)
-		var latex = "y^2 + x^2 = INPUT"
-		graph(latex,input,1)
-		graph(latex,input2,2)
-		graph(latex,input3,3)
-
+		var input = Array.max(data)
+		var input2 = (data[200])
+		var input3 = (data[500])
+		
+		
+		var latex1 = "(y-0.5)^2 + x^2 <= INPUT/3"
+		var latex2 = "(y-0.5)^2 + x^2 <= INPUT/10"
+		var latex3 = "(INPUT/90* x^2 + INPUT/90* y^2 -30)^3 - INPUT/4 * x^2*y^3 = 0"
+		
+	
+		//graph(latex1,input,1)
+		//graph(latex1,input2,2,"#FF0000")
+		//graph(latex1,input3,3,"#FF0000")
+		
+		
+		graph(latex1,input,4)
+		graph(latex2,input2,5,"#FF0000")
+		graph(latex2,input3,6,"#FF0000")
+		graph(latex3,input,7)
+		graph(latex4,input,8)
+		
+	
+		
 	}
 	
 	
@@ -39,14 +61,18 @@ function graphText() {
 	
 }
 
-function graph(latex,input,id) {
+function graph(latex,input,id,color) {
 	
-	latex = latex.replace("INPUT",input)
+	if(!color) {
+		color = '#000000'
+	}
+	
+	latex = replaceAll(latex,"INPUT",input)
 	calculator.removeExpression({id : "graph" + id});
 	calculator.setExpression({
 		id:'graph'+ id, 
 		latex:latex,
-		color: '#ff0000'
+		color: color
 	});
 	
 }
@@ -55,6 +81,11 @@ function graph(latex,input,id) {
 Array.max = function( array ){
     return Math.max.apply( Math, array );
 };
+
+// Replaces a part of a string 
+function replaceAll(str, find, replace) {
+  return str.replace(new RegExp(find, 'g'), replace);
+}
 
 function getData() {
 	
@@ -82,8 +113,6 @@ function getData() {
 		// render frame based on values in frequencyData
 		
 		
-		var visualizer = document.getElementById("visualizer")
-		visualizer.style.height = frequencyData[1]+"px"
 		data = frequencyData
 		//console.log(data)
 		

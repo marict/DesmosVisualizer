@@ -11,9 +11,10 @@
 		
 		<div id="calculator" ></div>
 		
-		<audio id="myAudio" src="music.mp3"></audio>
-		<div id="visualizer"></div>
+		<audio id="myAudio" src="lifestudy4.mp3"></audio>
 
+		<button id="button" type="button">Begin</button>
+		
 	</BODY>
 
 
